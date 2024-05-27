@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "google/protobuf/struct.proto";
+
+option java_multiple_files = true;
+option java_package = "innossh.proto.example.struct";
+option java_outer_classname = "StructExampleProto";
+
+message TextData {
+  string name = 1;
+  string content = 2;
+}
+
+message StructData {
+  string name = 1;
+  google.protobuf.Struct content = 2;
+}

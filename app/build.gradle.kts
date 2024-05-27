@@ -8,6 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+    id("com.google.protobuf") version "0.9.4"
 }
 
 repositories {
@@ -15,14 +16,16 @@ repositories {
     mavenCentral()
 }
 
+val protobufVersion: String by extra("4.27.0")
+
 dependencies {
+    implementation("com.google.protobuf:protobuf-java:$protobufVersion")
+    implementation("com.google.protobuf:protobuf-java-util:$protobufVersion")
+
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-    // This dependency is used by the application.
-    implementation(libs.guava)
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -32,9 +35,14 @@ java {
     }
 }
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:$protobufVersion"
+    }
+}
+
 application {
-    // Define the main class for the application.
-    mainClass = "org.example.App"
+    mainClass = "innossh.proto.example.App"
 }
 
 tasks.named<Test>("test") {
